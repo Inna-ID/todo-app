@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+:focus, :active, a:focus, a:active, input, button, textarea {
+  outline: none;
+}
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  line-height: 1.2;
+  font-size: 1em;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Ubuntu', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+.App {
+  background: linear-gradient(145deg, rgb(44, 72, 230),  rgb(84, 44, 230), rgb(44, 109, 230), rgb(10, 169, 209),rgb(54, 255, 255));
+  height: 100%;
+  color: #fff;
+  transition: all 10s ease;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  h1 {
+    position: relative;
+      background: linear-gradient(90deg, rgb(111, 163, 223), rgb(158, 67, 233), rgb(239, 76, 245));
+      background-size: 300%;
+      overflow: hidden;
+      transition: width 5s;
+      animation: gradientText 5s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+  }
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 300% 0;
+  }
+}
+
+.container {
+  width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jam {
+  font-size: 2em;
+  margin-right: 4px;
+}

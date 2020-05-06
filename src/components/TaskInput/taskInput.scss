@@ -1,0 +1,48 @@
+.task-input {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+    button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50px;
+      height: 100%;
+      border-radius: 5px;
+    }
+    // input {
+    //     width: 100%;
+    //     background: rgba(255,255,255, .75);
+    //     padding: 10px 10px;
+    //     border-radius: 5px;
+    //     transition: all .25s ease;
+    //     &::placeholder {
+    //         background: transparent;
+    //         color: #333;
+    //     }
+    // }
+    input {
+        width: 100%;
+        //background: rgba(255,255,255, .75);
+        background: transparent;
+        border-bottom: 1px solid rgba(255,255,255, .75);
+        color: #fff;
+        font-size: 1.125em;
+        padding-top: 5px;
+        padding-left: 5px;
+        padding-bottom: 5px;
+        transition: all .25s ease;
+        &::placeholder {
+            //background: transparent;
+            color: #fff;
+        }
+    }
+    .action-btn {
+        width: auto;
+    }
+    .jam {
+        display: inline-block;
+        opacity: .85;
+        margin-top: -5px;
+    }
+}
