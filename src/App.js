@@ -2,90 +2,90 @@ import React from 'react';
 import Task from './components/Task';
 import TaskInput from './components/TaskInput';
 import './App.scss';
+import dataTasks from './data/tasks.json';
 
-let gradient = [
-  [44, 72, 230],
-  [50, 139, 233],
-  [54, 255, 255]
-];
-
-let minVal = 0,
-  maxVal = 255;
-
-function setGradientBg() {
-  for (let i = 0; i < gradient.length; i++) {
-    for (let j = 0; j < gradient[i].length; j++) {
-      if (gradient[i][j] < maxVal + 3) {
-        gradient[i][j] += 3;
-      } else {
-        gradient[i][j] = minVal;
-      }
-    }
-  }
-  //console.log(gradient);
-  document.getElementsByClassName('App')[0].style.background = `linear-gradient(145deg, rgb(${gradient[0]}), rgb(${gradient[1]}), rgb(${gradient[2]})`;
-}
-
-// setInterval(function(){
-//   setGradientBg()
-// }, 1000)
-
-
+const LOCALSTORAGE_KEY = 'someJson';
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      tasks: [
-        {
-          id: 0,
-          title: 'read about life cycles',
-          done: false
-        },
-        {
-          id: 1,
-          title: 'Do english hw',
-          done: true
-        },
-        {
-          id: 2,
-          title: 'read about destructuring',
-          done: false
-        }
-      ]
+      json: []
     }
+  }
+  
+  componentWillMount () {
+    this.loadJson()
+  }
+
+
+  validateJson () {
+    let validJson;
+    try {
+      validJson = JSON.stringify(this.state.json)
+    } catch(e) {
+      throw e
+    }
+    return validJson;
+  }
+
+
+  loadJson = () => {
+    let json = window.localStorage.getItem(LOCALSTORAGE_KEY) || dataTasks;
+    this.setState({ json: JSON.parse(json) })
+  }
+
+
+  saveJson = () => {
+    const validJson = this.validateJson();
+    if (!validJson) return;
+    
+    window.localStorage.setItem(
+      LOCALSTORAGE_KEY,
+      validJson
+    )
   }
 
 
   addTask = task => {
-    let { tasks } = this.state;
+    let { json: tasks } = this.state;
     tasks.push({
-      id: tasks.lenght !== 0 ? task.length : 0,
+      id: dataTasks.lenght !== 0 ? task.length : 0,
       title: task,
       done: false
     })
-    this.setState({ tasks })
+    
+    this.setState({ tasks });
+    this.saveJson();
   }
+
 
   doneTask = id => {
-    let index = this.state.tasks.map(task => task.id).indexOf(id);
-    let { tasks } = this.state;
+    let { json: tasks } = this.state;
+    let index = tasks.map(task => task.id).indexOf(id);
+    
     tasks[index].done = true;
-    this.setState({ tasks })
+    this.setState({ tasks });
+    this.saveJson();
   }
+
 
   deleteTask = id => {
+    let { json: tasks } = this.state;
     // формируется массив из idшек тасок ... берем индекс нужного id
-    let index = this.state.tasks.map(task => task.id).indexOf(id);
+    let index = tasks.map(task => task.id).indexOf(id);
 
-    let tasks = this.state.tasks;
     tasks.splice(index, 1);
     this.setState({ tasks });
+
+    this.saveJson();
   }
+
+
 
 
   render() {
-    const { tasks } = this.state;
+    let tasks = this.state.json;
     const activeTasks = tasks.filter( task => !task.done );
     // const doneTasks = tasks.filter( task => task.done );
 

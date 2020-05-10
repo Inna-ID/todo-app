@@ -21,7 +21,7 @@ class TaskInput extends React.Component {
         this.setState({input: event.target.value})
     }
 
-    keyDown = event => {
+    handleEnter = event => {
         if(event.key === 'Enter') {
             this.addTask()
         }
@@ -31,7 +31,7 @@ class TaskInput extends React.Component {
         let {input} = this.state;
         return (
             <div className="task-input">
-                <input onChange={this.inputChange} onKeyDown={this.keyDown} value={input} placeholder="New task" type="text"/>
+                <input onChange={this.inputChange} onKeyDown={this.handleEnter} value={input} placeholder="New task" type="text"/>
                 <div onClick={this.addTask} className="action-btn">
                     <span className="jam jam-plus"></span>
                 </div>

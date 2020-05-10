@@ -43,13 +43,13 @@ body {
   color: white;
   h1 {
     position: relative;
-      background: linear-gradient(90deg, rgb(111, 163, 223), rgb(158, 67, 233), rgb(239, 76, 245));
-      background-size: 300%;
-      overflow: hidden;
-      transition: width 5s;
-      animation: gradientText 5s linear infinite;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, rgb(111, 163, 223), rgb(158, 67, 233), rgb(239, 76, 245));
+    background-size: 300%;
+    overflow: hidden;
+    transition: width 5s;
+    animation: gradientText 5s linear infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
