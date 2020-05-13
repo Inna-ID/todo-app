@@ -4,25 +4,38 @@ import TaskInput from './components/TaskInput';
 import './App.scss';
 import dataTasks from './data/tasks.json';
 
-const LOCALSTORAGE_KEY = 'someJson';
+const LOCALSTORAGE_KEY = 'tasksJson';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      json: []
+      tasks: []
     }
   }
   
-  componentWillMount () {
+  componentDidMount () {
     this.loadJson()
+
+    window.addEventListener('beforeunload', (e) => {
+      e.preventDefault();
+      this.saveJson();
+      e.stopPropagation();
+    })
+  }
+
+  ///???
+  componentWillUnmount () {
+    window.removeEventListener('beforeunload', (e) => {
+      e.stopPropagation();
+    })
   }
 
 
   validateJson () {
     let validJson;
     try {
-      validJson = JSON.stringify(this.state.json)
+      validJson = JSON.stringify(this.state.tasks)
     } catch(e) {
       throw e
     }
@@ -31,8 +44,8 @@ class App extends React.Component {
 
 
   loadJson = () => {
-    let json = window.localStorage.getItem(LOCALSTORAGE_KEY) || dataTasks;
-    this.setState({ json: JSON.parse(json) })
+    let json = window.localStorage.getItem(LOCALSTORAGE_KEY) || JSON.stringify(dataTasks);
+    this.setState({ tasks: JSON.parse(json) })
   }
 
 
@@ -48,44 +61,40 @@ class App extends React.Component {
 
 
   addTask = task => {
-    let { json: tasks } = this.state;
+    let { tasks } = this.state;
     tasks.push({
-      id: dataTasks.lenght !== 0 ? task.length : 0,
+      id: '_' + Math.random().toString(36).substr(2, 9),
       title: task,
       done: false
     })
     
     this.setState({ tasks });
-    this.saveJson();
+    //this.saveJson();
   }
 
 
   doneTask = id => {
-    let { json: tasks } = this.state;
+    let { tasks } = this.state;
     let index = tasks.map(task => task.id).indexOf(id);
     
     tasks[index].done = true;
     this.setState({ tasks });
-    this.saveJson();
   }
 
 
   deleteTask = id => {
-    let { json: tasks } = this.state;
+    let { tasks } = this.state;
     // формируется массив из idшек тасок ... берем индекс нужного id
     let index = tasks.map(task => task.id).indexOf(id);
 
     tasks.splice(index, 1);
     this.setState({ tasks });
-
-    this.saveJson();
   }
 
 
 
-
   render() {
-    let tasks = this.state.json;
+    let { tasks } = this.state;
     const activeTasks = tasks.filter( task => !task.done );
     // const doneTasks = tasks.filter( task => task.done );
 
