@@ -2,9 +2,10 @@ import React from 'react';
 import Task from './components/Task';
 import TaskInput from './components/TaskInput';
 import './App.scss';
-import dataTasks from './data/tasks.json';
+import defaultTasks from './data/tasks.json';
+import DataStorage from './components/DataStorage';
 
-const LOCALSTORAGE_KEY = 'tasksJson';
+const storage = new DataStorage(defaultTasks);
 
 class App extends React.Component {
   constructor(props) {
@@ -15,11 +16,11 @@ class App extends React.Component {
   }
   
   componentDidMount () {
-    this.loadJson()
+    this.setState({ tasks: storage.loadJson() })
 
     window.addEventListener('beforeunload', (e) => {
       e.preventDefault();
-      this.saveJson();
+      storage.saveJson(this.state.tasks)
       e.stopPropagation();
     })
   }
@@ -32,34 +33,6 @@ class App extends React.Component {
   }
 
 
-  validateJson () {
-    let validJson;
-    try {
-      validJson = JSON.stringify(this.state.tasks)
-    } catch(e) {
-      throw e
-    }
-    return validJson;
-  }
-
-
-  loadJson = () => {
-    let json = window.localStorage.getItem(LOCALSTORAGE_KEY) || JSON.stringify(dataTasks);
-    this.setState({ tasks: JSON.parse(json) })
-  }
-
-
-  saveJson = () => {
-    const validJson = this.validateJson();
-    if (!validJson) return;
-    
-    window.localStorage.setItem(
-      LOCALSTORAGE_KEY,
-      validJson
-    )
-  }
-
-
   addTask = task => {
     let { tasks } = this.state;
     tasks.push({
@@ -69,7 +42,6 @@ class App extends React.Component {
     })
     
     this.setState({ tasks });
-    //this.saveJson();
   }
 
 
