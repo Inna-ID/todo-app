@@ -1,13 +1,14 @@
-import './App.css'
+import Home from './pages/Home/Home';
+import Header from './components/Header/Header';
+import './App.scss';
 
-function App() {
+const App = () => {
   return (
     <>
-      <div>
-        <h1>Test</h1>
-      </div>
+      <Header/>
+      <Home/>
     </>
   )
 }
 
-export default App
+export default App;
