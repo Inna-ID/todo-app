@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from '../../components/Container/Container';
-import { Todo } from '../../types/todo';
+import { useTodos } from '../../hooks/useTodos';
+import AddTodo from '../../components/AddTodo/AddTodo';
 import TodoList from '../../components/TodoList/TodoList';
 import './Home.scss';
 
 const Home: React.FC = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
-
-    const toggleTodo = (id: number) => {
-        setTodos(
-            todos.map((todo) =>
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            )
-        );
-    };
-
-    const removeTodo = (id: number) => {
-        setTodos(todos.filter((todo) => todo.id !== id));
-    };
+    const { todos, addTodo, toggleTodo, removeTodo } = useTodos();
 
     return (
         <div className="home">
             <Container>
+                <AddTodo onAdd={addTodo} />
                 <TodoList
                     todos={todos}
                     toggleTodo={toggleTodo}
