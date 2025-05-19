@@ -1,0 +1,30 @@
+.todo-form {
+    &__input {
+        border: none;
+        min-width: 300px;
+        padding: 14px;
+        border-radius: 8px;
+        outline: none;
+        font-size: 18px;
+        font-family: 'Inter', sans-serif;
+        margin-right: 20px;
+        box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.15);
+    }
+
+    &__button {
+        border-radius: 8px;
+        background: #ff8a65;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        font-size: 20px;
+        font-weight: 600;
+        color: #fff;
+        margin-left: auto;
+        cursor: pointer;
+        border: none;
+        transition: transform 0.1s;
+
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+}
